@@ -15,8 +15,19 @@ public class Member extends BaseEntity {
     private Long id; // 고유 식별자
 
     private String memberEmail;
-    private String memberName;
     private String memberPassword;
+    private String memberName;
     private String memberPhone;
-    private String memberImg;
+    private String memberImg = "default_img";
+
+    /** 생성자 **/
+    public Member() {
+
+    }
+    public Member(String memberEmail, String memberPassword, String memberName, String memberPhone) {
+        this.memberEmail = memberEmail;
+        this.memberPassword = memberPassword;
+        this.memberName = memberName;
+        this.memberPhone = memberPhone;
+    }
 }
