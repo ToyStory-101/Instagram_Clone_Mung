@@ -1,10 +1,8 @@
 package instagram_clone.instagram_clone.domain.follow.entity;
 
+import instagram_clone.instagram_clone.domain.member.entity.Member;
 import instagram_clone.instagram_clone.global.common.base.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
@@ -12,12 +10,14 @@ import lombok.Getter;
 public class follow extends BaseEntity {
     @Id
     @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "follow_id")
     private Long id; // 고유 식별자
 
-    private String memberEmail;
-    private String memberName;
-    private String memberPassword;
-    private String memberPhone;
-    private String memberImg;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "from_member_id")
+    private Member fromMember;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_member_id")
+    private Member toMember;
 }
