@@ -7,6 +7,8 @@ import instagram_clone.instagram_clone.domain.member.repository.MemberRepository
 import instagram_clone.instagram_clone.global.common.CommonMethod;
 import instagram_clone.instagram_clone.global.common.exception.CustomException;
 import instagram_clone.instagram_clone.global.common.response.ErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final CommonMethod commonMethod;
     @Override
+    @Transactional
     public MemberResponseDTO.MemberLoginDTO login(MemberRequestDTO.MemberLoginDTO memberLoginDTO) {
         log.info("[MemberServiceImpl] login");
         try {
@@ -33,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
                 throw new CustomException(ErrorCode.USER_NOT_FOUND);
             }
         } catch (CustomException ce){
-            log.info("[CustomException] MemberServiceImpl login");
+            log.info("[CustomException] MemberServiceImpl login" + ce.getMessage());
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] MemberServiceImpl login");
@@ -42,13 +45,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDTO.MemberLogoutDTO logout(String userEmail) {
+    @Transactional
+    public MemberResponseDTO.MemberLogoutDTO logout(HttpServletRequest request, String userEmail) {
         log.info("[MemberServiceImpl] logout");
         try {
             Member findMember = commonMethod.getMember(userEmail, "email");
+
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate(); // 세션 무효화
+            }
+
             return new MemberResponseDTO.MemberLogoutDTO(findMember);
         } catch (CustomException ce){
-            log.info("[CustomException] MemberServiceImpl logout");
+            log.info("[CustomException] MemberServiceImpl logout" + ce.getMessage());
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] MemberServiceImpl logout");
@@ -57,6 +67,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public MemberResponseDTO.MemberJoinDTO join(MemberRequestDTO.MemberJoinDTO memberJoinDTO) {
         log.info("[MemberServiceImpl] join");
         try {
@@ -69,7 +80,7 @@ public class MemberServiceImpl implements MemberService {
 
             return new MemberResponseDTO.MemberJoinDTO(member);
         } catch (CustomException ce){
-            log.info("[CustomException] MemberServiceImpl join");
+            log.info("[CustomException] MemberServiceImpl join : " + ce.getErrorCode());
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] MemberServiceImpl join");
@@ -78,10 +89,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public MemberResponseDTO.MemberDeleteDTO delete(String userEmail) {
         log.info("[MemberServiceImpl] delete");
         try {
-            Member findMember = commonMethod.getMember(userEmail, "email");
+            Member findMember = commonMethod.getMember("email", userEmail);
             memberRepository.delete(findMember);
             return new MemberResponseDTO.MemberDeleteDTO(findMember);
         } catch (CustomException ce){
@@ -98,7 +110,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDTO.MemberUpdateDTO update(MemberRequestDTO.MemberUpdateDTO memberUpdateDTO, String userEmail) {
         log.info("[MemberServiceImpl] update");
         try {
-            Member findMember = commonMethod.getMember(userEmail, "email");
+            Member findMember = commonMethod.getMember("email", userEmail);
             return new MemberResponseDTO.MemberUpdateDTO(findMember);
         } catch (CustomException ce){
             log.info("[CustomException] MemberServiceImpl update");
@@ -113,8 +125,8 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDTO.MemberFindOneDTO findOne(String userEmail) {
         log.info("[MemberServiceImpl] findOne");
         try {
-            Member findMember = commonMethod.getMember(userEmail, "email");
-            return new MemberResponseDTO.MemberFindOneDTO(findMember)
+            Member findMember = commonMethod.getMember("email", userEmail);
+            return new MemberResponseDTO.MemberFindOneDTO(findMember);
         } catch (CustomException ce){
             log.info("[CustomException] MemberServiceImpl findOne");
             throw ce;

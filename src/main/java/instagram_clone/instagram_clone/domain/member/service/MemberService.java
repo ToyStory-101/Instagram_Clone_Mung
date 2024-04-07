@@ -2,13 +2,14 @@ package instagram_clone.instagram_clone.domain.member.service;
 
 import instagram_clone.instagram_clone.domain.member.dto.MemberRequestDTO;
 import instagram_clone.instagram_clone.domain.member.dto.MemberResponseDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface MemberService {
     // 로그인
     MemberResponseDTO.MemberLoginDTO login(MemberRequestDTO.MemberLoginDTO memberLoginDTO);
 
     // 로그아웃
-    MemberResponseDTO.MemberLogoutDTO logout(String userEmail);
+    MemberResponseDTO.MemberLogoutDTO logout(HttpServletRequest request, String userEmail);
 
     // 회원 가입
     MemberResponseDTO.MemberJoinDTO join(MemberRequestDTO.MemberJoinDTO memberJoinDTO);

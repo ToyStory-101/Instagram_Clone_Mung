@@ -19,6 +19,8 @@ public class CommonMethod {
     public Member getMember(String identifier, Object value) throws CustomException {
         Optional<Member> findMember = null;
         if (identifier.equals("email")) {
+            System.out.println("=====dadd");
+            System.out.println(value);
             findMember = memberRepository.findByMemberEmail((String) value);
         } else if (identifier.equals("id")) {
             findMember = memberRepository.findById((Long) value);
