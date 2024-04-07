@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MemberResponseDTO {
+    @Data
     public static class MemberLoginDTO {
         private String memberEmail;
         private String memberPassword;
@@ -18,7 +19,7 @@ public class MemberResponseDTO {
             this.memberImg = member.getMemberImg();
         }
     }
-
+    @Data
     public static class MemberLogoutDTO {
         private String memberEmail;
         private String memberPassword;
@@ -33,7 +34,7 @@ public class MemberResponseDTO {
             this.memberImg = member.getMemberImg();
         }
     }
-
+    @Data
     public static class MemberJoinDTO {
         private String memberEmail;
         private String memberPassword;
@@ -48,7 +49,7 @@ public class MemberResponseDTO {
             this.memberImg = member.getMemberImg();
         }
     }
-
+    @Data
     public static class MemberDeleteDTO {
         private String memberEmail;
         private String memberPassword;
@@ -63,7 +64,7 @@ public class MemberResponseDTO {
             this.memberImg = member.getMemberImg();
         }
     }
-
+    @Data
     public static class MemberUpdateDTO {
         private String memberEmail;
         private String memberPassword;
@@ -78,7 +79,7 @@ public class MemberResponseDTO {
             this.memberImg = member.getMemberImg();
         }
     }
-
+    @Data
     public static class MemberFindOneDTO {
         private String memberEmail;
         private String memberPassword;

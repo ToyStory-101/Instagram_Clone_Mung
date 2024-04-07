@@ -5,11 +5,12 @@ import lombok.Data;
 
 @Data
 public class MemberRequestDTO {
+    @Data
     public static class MemberLoginDTO {
         private String memberEmail;
         private String memberPassword;
     }
-
+    @Data
     public static class MemberJoinDTO {
         private String memberEmail;
         private String memberPassword;
@@ -19,7 +20,7 @@ public class MemberRequestDTO {
             return new Member(this.memberEmail, this.memberPassword, this.memberName, this.memberPhone);
         }
     }
-
+    @Data
     public static class MemberUpdateDTO {
         private String memberName;
     }
