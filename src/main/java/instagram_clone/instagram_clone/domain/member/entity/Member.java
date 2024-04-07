@@ -1,5 +1,6 @@
 package instagram_clone.instagram_clone.domain.member.entity;
 
+import instagram_clone.instagram_clone.domain.member.dto.MemberRequestDTO;
 import instagram_clone.instagram_clone.global.common.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,6 +20,11 @@ public class Member extends BaseEntity {
     private String memberName;
     private String memberPhone;
     private String memberImg = "default_img";
+
+    /** 메서드 **/
+    public void updateMemberName(MemberRequestDTO.MemberUpdateDTO memberUpdateDTO) {
+        this.memberName = memberUpdateDTO.getMemberName();
+    }
 
     /** 생성자 **/
     public Member() {

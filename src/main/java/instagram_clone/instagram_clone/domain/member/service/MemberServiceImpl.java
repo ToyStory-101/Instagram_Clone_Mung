@@ -111,6 +111,7 @@ public class MemberServiceImpl implements MemberService {
         log.info("[MemberServiceImpl] update");
         try {
             Member findMember = commonMethod.getMember("email", userEmail);
+            findMember.updateMemberName(memberUpdateDTO);
             return new MemberResponseDTO.MemberUpdateDTO(findMember);
         } catch (CustomException ce){
             log.info("[CustomException] MemberServiceImpl update");

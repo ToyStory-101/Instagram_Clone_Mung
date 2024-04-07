@@ -44,7 +44,7 @@ public class MemberApiController {
             MemberResponseDTO.MemberJoinDTO result = memberService.join(memberJoinDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[MemberApiController] join success", result));
         } catch (Exception500 e) {
-            log.info("[Exception500] UserApiController join");
+            log.info("[Exception500] MemberApiController join");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -70,20 +70,21 @@ public class MemberApiController {
             MemberResponseDTO.MemberDeleteDTO result = memberService.delete((String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[MemberApiController] delete success", result));
         }  catch (Exception500 e) {
-            log.info("[Exception500] UserApiController join");
+            log.info("[Exception500] MemberApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
 
     // 회원 수정
     @PutMapping("/update")
-    public ResponseEntity<?> update(MemberRequestDTO.MemberUpdateDTO memberUpdateDTO, HttpSession httpSession) {
+    public ResponseEntity<?> update(@RequestBody MemberRequestDTO.MemberUpdateDTO memberUpdateDTO, HttpSession httpSession) {
         try {
-            log.info("[MemberApiController] delete");
+            log.info("[MemberApiController] update");
+            System.out.println(memberUpdateDTO.getMemberName());
             MemberResponseDTO.MemberUpdateDTO result = memberService.update(memberUpdateDTO, (String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[MemberApiController] update success", result));
         }  catch (Exception500 e) {
-            log.info("[Exception500] UserApiController join");
+            log.info("[Exception500] MemberApiController update");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -96,7 +97,7 @@ public class MemberApiController {
             MemberResponseDTO.MemberFindOneDTO result = memberService.findOne((String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[MemberApiController] findOne success", result));
         }  catch (Exception500 e) {
-            log.info("[Exception500] UserApiController join");
+            log.info("[Exception500] MemberApiController findOne");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
