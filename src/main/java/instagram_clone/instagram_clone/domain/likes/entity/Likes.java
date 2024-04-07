@@ -10,10 +10,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Like extends BaseEntity {
+public class Likes extends BaseEntity {
     @Id
     @GeneratedValue
-    @Column(name = "like_id")
+    @Column(name = "likes_id")
     private Long id; // 고유 식별자
 
     @OneToOne(fetch = FetchType.LAZY)
