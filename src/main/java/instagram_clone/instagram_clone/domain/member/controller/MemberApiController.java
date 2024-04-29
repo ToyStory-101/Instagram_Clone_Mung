@@ -3,7 +3,6 @@ package instagram_clone.instagram_clone.domain.member.controller;
 import instagram_clone.instagram_clone.domain.member.dto.MemberRequestDTO;
 import instagram_clone.instagram_clone.domain.member.dto.MemberResponseDTO;
 import instagram_clone.instagram_clone.domain.member.service.MemberServiceImpl;
-import instagram_clone.instagram_clone.global.common.exception.CustomException;
 import instagram_clone.instagram_clone.global.common.exception.Exception500;
 import instagram_clone.instagram_clone.global.common.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;

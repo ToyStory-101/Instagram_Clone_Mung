@@ -23,6 +23,7 @@ import java.util.Optional;
 @Slf4j
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
     private final CommonMethod commonMethod;
     @Override
     @Transactional
@@ -97,9 +98,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponseDTO.PostFindAllDTO findAll(Long memberId) {
+    public PostResponseDTO.PostFindAllDTO findAll(String memberEmail) {
         try {
-            PostResponseDTO.PostFindAllDTO postFindAllList = postRepository.postFindAll(memberId);
+            Member findMember = commonMethod.getMember("email", memberEmail);
+            PostResponseDTO.PostFindAllDTO postFindAllList = postRepository.postFindAll(findMember.getId());
             return postFindAllList;
         } catch (CustomException ce){
             log.info("[CustomException] PostServiceImpl findAll");
