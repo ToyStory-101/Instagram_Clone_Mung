@@ -62,15 +62,11 @@ public class PostResponseDTO {
     }
     @Setter
     @Getter
-    public class PostFindAllDTO {
-        private String memberEmail;
-        private String memberName;
-        private String memberImg;
+    public static class PostFindAllDTO {
+        private Long memberId;
         List<PostFindOneDTO> postList;
-        public PostFindAllDTO(String memberEmail, String memberName, String memberImg, List<PostFindOneDTO> postList) {
-            this.memberEmail = memberEmail;
-            this.memberName = memberName;
-            this.memberImg = memberImg;
+        public PostFindAllDTO(Long memberId, List<PostFindOneDTO> postList) {
+            this.memberId = memberId;
             this.postList = postList;
         }
     }

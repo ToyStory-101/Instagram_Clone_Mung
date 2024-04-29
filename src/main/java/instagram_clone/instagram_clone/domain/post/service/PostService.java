@@ -16,5 +16,5 @@ public interface PostService {
     PostResponseDTO.PostFindOneDTO findOne(Long postId);
 
     // 게시물 전체 조회
-    PostResponseDTO.PostFindAllDTO findAll(Long postId);
+    PostResponseDTO.PostFindAllDTO findAll(Long memberId);
 }

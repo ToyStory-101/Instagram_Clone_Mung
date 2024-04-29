@@ -63,17 +63,49 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostResponseDTO.PostUpdateDTO update(PostRequestDTO.PostUpdateDTO postUpdateDTO, String userEmail, Long postId) {
-        return null;
+    public PostResponseDTO.PostUpdateDTO update(PostRequestDTO.PostUpdateDTO postUpdateDTO, String memberEmail, Long postId) {
+        Member findUser = commonMethod.getMember("email", memberEmail);
+        Post findPost = commonMethod.getPost(postId);
+        try {
+            if(findUser == findPost.getMember()) {
+                findPost.updatePost(postUpdateDTO.getPostImg(), postUpdateDTO.getPostLocation(), postUpdateDTO.getPostContent());
+            }
+            else {
+                throw new CustomException(ErrorCode.ACCESS_DENIED);
+            }
+
+            return new PostResponseDTO.PostUpdateDTO(findPost);
+        } catch (CustomException ce){
+            log.info("[CustomException] PostServiceImpl update");
+            throw ce;
+        } catch (Exception e){
+            throw new CustomException(ErrorCode.SERVER_ERROR, "PostServiceImpl update : " + e.getMessage());
+        }
     }
 
     @Override
     public PostResponseDTO.PostFindOneDTO findOne(Long postId) {
-        return null;
+        try {
+            PostResponseDTO.PostFindOneDTO findPost = postRepository.findOne(postId);
+            return findPost;
+        } catch (CustomException ce){
+            log.info("[CustomException] PostServiceImpl findOne");
+            throw ce;
+        } catch (Exception e){
+            throw new CustomException(ErrorCode.SERVER_ERROR, "PostServiceImpl findOne : " + e.getMessage());
+        }
     }
 
     @Override
-    public PostResponseDTO.PostFindAllDTO findAll(Long postId) {
-        return null;
+    public PostResponseDTO.PostFindAllDTO findAll(Long memberId) {
+        try {
+            PostResponseDTO.PostFindAllDTO postFindAllList = postRepository.postFindAll(memberId);
+            return postFindAllList;
+        } catch (CustomException ce){
+            log.info("[CustomException] PostServiceImpl findAll");
+            throw ce;
+        } catch (Exception e){
+            throw new CustomException(ErrorCode.SERVER_ERROR, "PostServiceImpl findAll : " + e.getMessage());
+        }
     }
 }

@@ -32,4 +32,9 @@ public class Post extends BaseEntity {
     public void setPostUser(Member member)  {
         this.member = member;
     }
+    public void updatePost(String postImg, String postLocation, String postContent) {
+        this.postImg = postImg;
+        this.postLocation = postLocation;
+        this.postContent = postContent;
+    }
 }
