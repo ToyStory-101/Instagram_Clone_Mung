@@ -22,4 +22,10 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public Post(String postImg, String postLocation, String postContent) {
+        this.postImg = postImg;
+        this.postLocation = postLocation;
+        this.postContent = postContent;
+    }
 }
