@@ -35,7 +35,7 @@ public class CommonMethod {
     }
 
     /** Post Method **/
-    private Post getPost(Long id) {
+    public Post getPost(Long id) {
         Optional<Post> findPost = postRepository.findById(id);
         if(!findPost.isPresent()) {
             throw new CustomException(ErrorCode.POST_NOT_FOUND);

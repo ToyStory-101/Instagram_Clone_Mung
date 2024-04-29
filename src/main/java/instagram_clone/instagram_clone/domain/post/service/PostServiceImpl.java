@@ -43,8 +43,22 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void delete(Long postId, String userEmail) {
-
+    public void delete(Long postId, String memberEmail) {
+        Member findUser = commonMethod.getMember("email", memberEmail);
+        Post findPost = commonMethod.getPost(postId);
+        try {
+            if(findUser == findPost.getMember()) {
+                postRepository.delete(findPost);
+            }
+            else {
+                throw new CustomException(ErrorCode.ACCESS_DENIED);
+            }
+        } catch (CustomException ce){
+            log.info("[CustomException] PostServiceImpl delete");
+            throw ce;
+        } catch (Exception e){
+            throw new CustomException(ErrorCode.SERVER_ERROR, "PostServiceImpl delete : " + e.getMessage());
+        }
     }
 
     @Override
