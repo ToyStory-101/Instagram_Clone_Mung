@@ -100,6 +100,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDTO.PostFindAllDTO findAll(String memberEmail) {
         try {
+            log.info("[PostServiceImpl] findAll");
             Member findMember = commonMethod.getMember("email", memberEmail);
             PostResponseDTO.PostFindAllDTO postFindAllList = postRepository.postFindAll(findMember.getId());
             return postFindAllList;

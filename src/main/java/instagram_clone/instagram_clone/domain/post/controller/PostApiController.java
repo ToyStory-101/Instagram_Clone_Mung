@@ -69,6 +69,7 @@ public class PostApiController {
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll(HttpSession httpSession) {
         try {
+            log.info("[PostApiController] findAll");
             System.out.println((String) httpSession.getAttribute("memberEmail"));
             PostResponseDTO.PostFindAllDTO result = postService.findAll((String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post findOne success", result));

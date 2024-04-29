@@ -38,14 +38,20 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     @Override
     public PostResponseDTO.PostFindAllDTO postFindAll(Long memberId) {
         List<PostResponseDTO.PostFindOneDTO> postList = queryFactory
-                .select(Projections.constructor(PostResponseDTO.PostFindOneDTO.class, post))
-                .from(member)
+                .select(Projections.constructor(PostResponseDTO.PostFindOneDTO.class,
+                        post.id,
+                        post.postImg,
+                        post.postLocation,
+                        post.postContent,
+                        member.memberEmail,
+                        member.memberName,
+                        member.memberPhone,
+                        member.memberImg
+                ))
+                .from(post)
                 .leftJoin(post.member, member)
-                .where(post.member.id.eq(memberId)
-                        .and(member.id.eq(memberId))
-                )
+                .where(member.id.eq(memberId))
                 .fetch();
-
         return new PostResponseDTO.PostFindAllDTO(memberId, postList);
     }
 }
