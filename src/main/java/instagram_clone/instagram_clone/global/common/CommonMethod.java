@@ -1,6 +1,8 @@
 package instagram_clone.instagram_clone.global.common;
 import instagram_clone.instagram_clone.domain.member.entity.Member;
 import instagram_clone.instagram_clone.domain.member.repository.MemberRepository;
+import instagram_clone.instagram_clone.domain.post.entity.Post;
+import instagram_clone.instagram_clone.domain.post.repository.PostRepository;
 import instagram_clone.instagram_clone.global.common.exception.CustomException;
 import instagram_clone.instagram_clone.global.common.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @Service
 public class CommonMethod {
     private final MemberRepository memberRepository;
+    private final PostRepository postRepository;
 
     /** Member Method **/
     public Member getMember(String identifier, Object value) throws CustomException {
@@ -29,5 +32,17 @@ public class CommonMethod {
         }
 
         return findMember.get();
+    }
+
+    /** Post Method **/
+    private Post getPost(Long id) {
+        Optional<Post> findPost = postRepository.findById(id);
+        if(!findPost.isPresent()) {
+            throw new CustomException(ErrorCode.POST_NOT_FOUND);
+        }
+        else {
+            Post post = findPost.get();
+            return post;
+        }
     }
 }

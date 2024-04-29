@@ -28,4 +28,8 @@ public class Post extends BaseEntity {
         this.postLocation = postLocation;
         this.postContent = postContent;
     }
+
+    public void setPostUser(Member member)  {
+        this.member = member;
+    }
 }
