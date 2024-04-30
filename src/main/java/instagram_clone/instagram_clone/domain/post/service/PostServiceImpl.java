@@ -87,6 +87,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDTO.PostFindOneDTO findOne(Long postId) {
         try {
+            commonMethod.getPost(postId);
             PostResponseDTO.PostFindOneDTO findPost = postRepository.findOne(postId);
             return findPost;
         } catch (CustomException ce){
