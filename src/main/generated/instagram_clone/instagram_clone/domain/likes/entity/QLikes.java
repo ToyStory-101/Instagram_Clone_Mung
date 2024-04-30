@@ -29,12 +29,12 @@ public class QLikes extends EntityPathBase<Likes> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final instagram_clone.instagram_clone.domain.member.entity.QMember member;
+
     public final instagram_clone.instagram_clone.domain.post.entity.QPost post;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updateDate = _super.updateDate;
-
-    public final instagram_clone.instagram_clone.domain.member.entity.QMember user;
 
     public QLikes(String variable) {
         this(Likes.class, forVariable(variable), INITS);
@@ -54,8 +54,8 @@ public class QLikes extends EntityPathBase<Likes> {
 
     public QLikes(Class<? extends Likes> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.member = inits.isInitialized("member") ? new instagram_clone.instagram_clone.domain.member.entity.QMember(forProperty("member")) : null;
         this.post = inits.isInitialized("post") ? new instagram_clone.instagram_clone.domain.post.entity.QPost(forProperty("post"), inits.get("post")) : null;
-        this.user = inits.isInitialized("user") ? new instagram_clone.instagram_clone.domain.member.entity.QMember(forProperty("user")) : null;
     }
 
 }
