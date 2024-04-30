@@ -36,7 +36,6 @@ public class PostApiController {
     public ResponseEntity<?> delete(@PathVariable("postId") Long postId, HttpSession httpSession) {
         try {
             log.info("[PostApiController] delete");
-            System.out.println((String) httpSession.getAttribute("memberEmail"));
             postService.delete(postId, (String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post delete success"));
         } catch (Exception500 e) {
@@ -49,7 +48,6 @@ public class PostApiController {
     public ResponseEntity<?> update(@RequestBody PostRequestDTO.PostUpdateDTO postUpdateDTO, @PathVariable("postId") Long postId, HttpSession httpSession) {
         try {
             log.info("[PostApiController] update");
-            System.out.println((String) httpSession.getAttribute("memberEmail"));
             PostResponseDTO.PostUpdateDTO result = postService.update(postUpdateDTO, (String) httpSession.getAttribute("memberEmail"), postId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post update success", result));
         } catch (Exception500 e) {
@@ -74,7 +72,6 @@ public class PostApiController {
     public ResponseEntity<?> findAll(HttpSession httpSession) {
         try {
             log.info("[PostApiController] findAll");
-            System.out.println((String) httpSession.getAttribute("memberEmail"));
             PostResponseDTO.PostFindAllDTO result = postService.findAll((String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post findAll success", result));
         } catch (Exception500 e) {
