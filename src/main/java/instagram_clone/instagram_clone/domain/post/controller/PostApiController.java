@@ -23,6 +23,7 @@ public class PostApiController {
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestBody PostRequestDTO.PostUploadDTO postUploadDTO, HttpSession httpSession) {
         try {
+            log.info("[PostApiController] upload");
             PostResponseDTO.PostUploadDTO result = postService.upload(postUploadDTO, (String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post upload success", result));
         } catch (Exception500 e) {
@@ -32,8 +33,9 @@ public class PostApiController {
 
     // 게시물 삭제
     @PostMapping("/delete/{postId}")
-    public ResponseEntity<?> delete(@PathVariable Long postId, HttpSession httpSession) {
+    public ResponseEntity<?> delete(@PathVariable("postId") Long postId, HttpSession httpSession) {
         try {
+            log.info("[PostApiController] delete");
             System.out.println((String) httpSession.getAttribute("memberEmail"));
             postService.delete(postId, (String) httpSession.getAttribute("memberEmail"));
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post delete success"));
@@ -44,8 +46,9 @@ public class PostApiController {
 
     // 게시물 수정
     @PostMapping("/update/{postId}")
-    public ResponseEntity<?> update(@RequestBody PostRequestDTO.PostUpdateDTO postUpdateDTO, @PathVariable Long postId, HttpSession httpSession) {
+    public ResponseEntity<?> update(@RequestBody PostRequestDTO.PostUpdateDTO postUpdateDTO, @PathVariable("postId") Long postId, HttpSession httpSession) {
         try {
+            log.info("[PostApiController] update");
             System.out.println((String) httpSession.getAttribute("memberEmail"));
             PostResponseDTO.PostUpdateDTO result = postService.update(postUpdateDTO, (String) httpSession.getAttribute("memberEmail"), postId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post update success", result));
@@ -56,8 +59,9 @@ public class PostApiController {
 
     // 게시물 하나 조회
     @GetMapping("/findOne/{postId}")
-    public ResponseEntity<?> findOne(@PathVariable Long postId) {
+    public ResponseEntity<?> findOne(@PathVariable("postId") Long postId) {
         try {
+            log.info("[PostApiController] findOne");
             PostResponseDTO.PostFindOneDTO result = postService.findOne(postId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post findOne success", result));
         } catch (Exception500 e) {
@@ -72,7 +76,7 @@ public class PostApiController {
             log.info("[PostApiController] findAll");
             System.out.println((String) httpSession.getAttribute("memberEmail"));
             PostResponseDTO.PostFindAllDTO result = postService.findAll((String) httpSession.getAttribute("memberEmail"));
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post findOne success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "post findAll success", result));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
